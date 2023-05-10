@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  server:
+    image: node:19.0.0-alpine
+    working_dir: /home/node
+    tty: true
+    stdin_open: true
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node
+
+  db:
+    image: postgres:15.2
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
