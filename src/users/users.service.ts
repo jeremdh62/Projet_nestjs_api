@@ -42,5 +42,9 @@ export class UsersService {
 
         return this.userRepo.delete(id);
     }
+
+    public async getUserByEmail(email: string) {
+        return this.userRepo.findOneBy({ email });
+    }
     
 }

@@ -1,4 +1,4 @@
-import { IsDefined, IsOptional, IsString } from "class-validator";
+import { IsDate, IsDefined, IsOptional, IsString } from "class-validator";
 
 export class CreateUserRequest {
   @IsDefined()
@@ -12,6 +12,15 @@ export class CreateUserRequest {
   @IsDefined()
   @IsString()
   public password: string;
+
+
+  @IsOptional()
+  @IsDate()
+  public createdAt: Date;
+
+  @IsOptional()
+  @IsDate()
+  public updatedAt: Date;
 }
 
 export class UpdateUserRequest {
