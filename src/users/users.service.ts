@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserRequest, UpdateUserRequest } from './users.request';
-
+const bcrypt = require('bcrypt');
 @Injectable()
 export class UsersService {
 
@@ -19,6 +19,7 @@ export class UsersService {
     }
 
     public createUser(createUserRequest: CreateUserRequest) {
+        createUserRequest.password = bcrypt.hashSync(createUserRequest.password, 10);
         return this.userRepo.insert(createUserRequest);
     }
 
