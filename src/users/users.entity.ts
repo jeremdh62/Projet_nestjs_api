@@ -27,8 +27,7 @@ export class User {
 
   @Column({
     type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public createdAt: Date;
-
-  public updatedAt: Date;
 }

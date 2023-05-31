@@ -12,15 +12,6 @@ export class CreateUserRequest {
   @IsDefined()
   @IsString()
   public password: string;
-
-
-  @IsOptional()
-  @IsDate()
-  public createdAt: Date;
-
-  @IsOptional()
-  @IsDate()
-  public updatedAt: Date;
 }
 
 export class UpdateUserRequest {
