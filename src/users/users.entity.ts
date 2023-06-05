@@ -1,3 +1,4 @@
+import { Role } from 'src/enums/role.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -30,4 +31,12 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   public createdAt: Date;
+
+  @Column({
+    type: "enum",
+    enum: Role,
+    array: true,
+    default: [Role.User],
+  })
+  role: Role[]
 }
