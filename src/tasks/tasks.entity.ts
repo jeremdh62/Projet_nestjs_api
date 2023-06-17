@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/users.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum TaskStatus {
   TODO = "todo",
   DOING = "doing",
-  DONE = "DONE",
+  DONE = "done",
 }
 
 @Entity()
@@ -24,13 +25,6 @@ export class Task {
   })
   public description: string;
 
-  // TODO owner: User
-  // @Column({
-  //   type: 'char',
-  //   length: 255,
-  // })
-  // public owner: string;
-
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
@@ -43,4 +37,7 @@ export class Task {
     default: TaskStatus.TODO
   })
   public status: TaskStatus;
+
+  @ManyToOne(() => User, (user) => user.tasks)
+  user: User;
 }

@@ -23,3 +23,22 @@ export class UpdateTaskRequest {
   public description: string;
 
 }
+
+export class AssignUserToTaskRequest {
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  public taskId: string;
+
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  public userId: string;
+}
+
+export class UpdateTaskStatusRequest {
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  public status: string;
+}

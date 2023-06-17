@@ -11,7 +11,7 @@ export class UsersController {
     public constructor(private usersService: UsersService) { }
 
     @Get()
-    @Roles(Role.User1)
+    @Roles(Role.Admin)
     @UseGuards(RolesGuard)
     @HttpCode(200)
     public getUsers() {
