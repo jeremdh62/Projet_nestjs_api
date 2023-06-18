@@ -47,11 +47,15 @@ export class UsersController {
 
     @Patch(':id')
     @HttpCode(200)
+    @UseGuards(AdminOrOwnerGuard)
+    @IsOwnerOrAdmin(Entites.USER)
     public updateUser(@Param('id', ParseUUIDPipe) id: string, @Body(ValidationPipe) UpdateUserRequest: UpdateUserRequest) {
         return this.usersService.updateUser(id, UpdateUserRequest);
     }
 
     @Delete(':id')
+    @Roles(Role.ADMIN)
+    @UseGuards(AuthGuard, RolesGuard, AdminOrOwnerGuard)
     @HttpCode(200)
     public deleteUser(@Param('id', ParseUUIDPipe) id: string) {
         return this.usersService.deleteUser(id);
