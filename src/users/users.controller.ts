@@ -6,6 +6,9 @@ import { Role } from 'src/enums/role.enum';
 import { AllowAnonymos } from 'src/app.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { AdminOrOwnerGuard } from 'src/admin-or-owner.guard';
+import { IsOwnerOrAdmin } from 'src/admin-or-owner.decorator';
+import { Entites } from 'src/entities.enum';
 
 @Controller('users')
 export class UsersController {
@@ -21,6 +24,8 @@ export class UsersController {
 
     @Get(':id')
     @HttpCode(200)
+    @UseGuards(AdminOrOwnerGuard)
+    @IsOwnerOrAdmin(Entites.USER)
     public getUser(@Param('id', ParseUUIDPipe) id: string) {
         return this.usersService.getUser(id);
     }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from './users/users.entity';
 import { UsersService } from './users/users.service';
 import { Role } from './enums/role.enum';
+import { Entites } from './entities.enum';
 
 @Injectable()
 export class AdminOrOwnerGuard implements CanActivate {
@@ -12,21 +13,21 @@ export class AdminOrOwnerGuard implements CanActivate {
     private userService: UsersService,
   ) {}
 
-  private getSubject(entityName: string, id: string): Promise<User> {
-    if (entityName === Role.USER) {
-      return this.userService.getUser(id);
+  private async getSubject(entityName: string, id: string): Promise<User> {
+    if (entityName === Entites.USER) {
+      return await this.userService.getUser(id);
     }
 
     return null;
   }
 
   private async isOwner(
-    loggedInUser: User,
+    loggedInUser: any,
     subjectId: string,
     subjectEntity: string,
   ) {
     const subject = await this.getSubject(subjectEntity, subjectId);
-    if (subjectEntity === Role.USER && subject?.id === loggedInUser.id) {
+    if (subjectEntity === Entites.USER && subject?.id === loggedInUser.sub) {
       return true;
     }
 
@@ -44,9 +45,8 @@ export class AdminOrOwnerGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const loggedInUser = request.user;
     const subjectId = request.params.id;
-
     if (loggedInUser == null || !subjectId) return false;
-    if (loggedInUser.role === Role.ADMIN) return true;
+    if (loggedInUser.roles[0] === Role.ADMIN) return true;
 
     return this.isOwner(loggedInUser, subjectId, entityName);
   }
