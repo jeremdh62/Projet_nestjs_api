@@ -22,7 +22,7 @@ export class AuthService {
         if (!bcrypt.compareSync(password.trim(), user?.password.trim())) {
             throw new UnauthorizedException();
         }
-        const payload = { email: user.email, sub: user.id };
+        const payload = { email: user.email, sub: user.id, roles: user.role };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };

@@ -5,14 +5,15 @@ import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AllowAnonymos } from 'src/app.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
     public constructor(private usersService: UsersService) { }
 
     @Get()
-    @Roles(Role.Admin)
-    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN)
+    @UseGuards(AuthGuard, RolesGuard)
     @HttpCode(200)
     public getUsers() {
         return this.usersService.getUsers();
@@ -29,6 +30,14 @@ export class UsersController {
     @HttpCode(201)
     public createUser(@Body(ValidationPipe) createUserRequest: CreateUserRequest) {
         return this.usersService.createUser(createUserRequest);
+    }
+
+    @Post('admin')
+    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN)
+    @HttpCode(201)
+    public createAdmin(@Body(ValidationPipe) createUserRequest: CreateUserRequest) {
+        return this.usersService.createAdmin(createUserRequest);
     }
 
     @Patch(':id')
