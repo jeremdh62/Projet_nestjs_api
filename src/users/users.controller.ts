@@ -5,14 +5,18 @@ import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AllowAnonymos } from 'src/app.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { AdminOrOwnerGuard } from 'src/admin-or-owner.guard';
+import { IsOwnerOrAdmin } from 'src/admin-or-owner.decorator';
+import { Entites } from 'src/entities.enum';
 
 @Controller('users')
 export class UsersController {
     public constructor(private usersService: UsersService) { }
 
     @Get()
-    @Roles(Role.Admin)
-    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN)
+    @UseGuards(AuthGuard, RolesGuard)
     @HttpCode(200)
     public getUsers() {
         return this.usersService.getUsers();
@@ -20,6 +24,8 @@ export class UsersController {
 
     @Get(':id')
     @HttpCode(200)
+    @UseGuards(AdminOrOwnerGuard)
+    @IsOwnerOrAdmin(Entites.USER)
     public getUser(@Param('id', ParseUUIDPipe) id: string) {
         return this.usersService.getUser(id);
     }
@@ -31,13 +37,25 @@ export class UsersController {
         return this.usersService.createUser(createUserRequest);
     }
 
+    @Post('admin')
+    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN)
+    @HttpCode(201)
+    public createAdmin(@Body(ValidationPipe) createUserRequest: CreateUserRequest) {
+        return this.usersService.createAdmin(createUserRequest);
+    }
+
     @Patch(':id')
     @HttpCode(200)
+    @UseGuards(AdminOrOwnerGuard)
+    @IsOwnerOrAdmin(Entites.USER)
     public updateUser(@Param('id', ParseUUIDPipe) id: string, @Body(ValidationPipe) UpdateUserRequest: UpdateUserRequest) {
         return this.usersService.updateUser(id, UpdateUserRequest);
     }
 
     @Delete(':id')
+    @Roles(Role.ADMIN)
+    @UseGuards(AuthGuard, RolesGuard, AdminOrOwnerGuard)
     @HttpCode(200)
     public deleteUser(@Param('id', ParseUUIDPipe) id: string) {
         return this.usersService.deleteUser(id);
