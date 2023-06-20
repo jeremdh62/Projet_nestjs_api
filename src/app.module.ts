@@ -7,16 +7,18 @@ import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     UsersModule,
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      database: "postgres",
-      username: "postgres",
-      password: "postgres",
-      host: "db",
+   TypeOrmModule.forRoot({
+      type: 'postgres',
+      database: process.env.DB_NAME,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      host: process.env.DB_HOST,
       port: 5432,
       autoLoadEntities: true,
       synchronize: true // set to false in prod
