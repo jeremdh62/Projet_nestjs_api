@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserRequest, UpdateUserRequest } from './users.request';
 import { Role } from 'src/enums/role.enum';
 const bcrypt = require('bcrypt');
+import { Cron, CronExpression } from '@nestjs/schedule';
 @Injectable()
 export class UsersService {
 
@@ -54,6 +55,13 @@ export class UsersService {
 
     public async getUserByEmail(email: string) {
         return this.userRepo.findOneBy({ email });
+    }
+
+    @Cron('0 0 */48 * *') // Exécution toutes les 48 heures
+    public async handleCron() {
+        const changes = await this.userRepo.find();
+        this.userRepo.save(changes);
+        (new Logger(UsersService.name)).debug('Database (users) saved.');
     }
     
 }
