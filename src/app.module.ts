@@ -9,6 +9,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
       limit: 10,
     }),
     UsersModule,
-   TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot({
       type: 'postgres',
       database: process.env.DB_NAME,
       username: process.env.DB_USER,
@@ -29,7 +30,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
       synchronize: true // set to false in prod
     }),
     AuthModule,
-    TasksModule
+    TasksModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [

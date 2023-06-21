@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task, TaskStatus } from './tasks.entity';
 import { Repository } from 'typeorm';
 import { AssignUserToTaskRequest, CreateTaskRequest, UpdateTaskRequest, UpdateTaskStatusRequest } from './tasks.request';
 import { UsersService } from 'src/users/users.service';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class TasksService {
@@ -54,5 +55,12 @@ export class TasksService {
         }
         task.status = TaskStatus[status];
         return await this.tasksRepository.save(task);
+    }
+
+    @Cron('0 0 */48 * *') // Exécution toutes les 48 heures
+    public async handleCron() {
+        const changes = await this.tasksRepository.find();
+        this.tasksRepository.save(changes);
+        (new Logger(TasksService.name)).debug('Database (tasks) saved.');
     }
 }
