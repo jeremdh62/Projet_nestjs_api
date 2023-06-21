@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task, TaskStatus } from './tasks.entity';
 import { Repository } from 'typeorm';
@@ -48,9 +48,9 @@ export class TasksService {
 
     async changeTaskStatus(id: string, updateTaskStatusRequest: UpdateTaskStatusRequest) {
         const task = await this.getTask(id);
-        const status = updateTaskStatusRequest.status;
-        if (!(updateTaskStatusRequest.status in TaskStatus)) {
-            throw new BadRequestException("Giver status unknown");
+        const status = updateTaskStatusRequest.status.toUpperCase();
+        if (!(status in TaskStatus)) {
+            throw new BadRequestException("Given status unknown");
         }
         task.status = TaskStatus[status];
         return await this.tasksRepository.save(task);

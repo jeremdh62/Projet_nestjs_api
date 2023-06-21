@@ -16,10 +16,12 @@ export class UpdateTaskRequest {
   @IsDefined()
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   public title: string;
 
   @IsDefined()
   @IsString()
+  @IsOptional()
   public description: string;
 
 }
