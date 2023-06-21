@@ -61,7 +61,7 @@ export class UsersService {
     public async handleCron() {
         const changes = await this.userRepo.find();
         this.userRepo.save(changes);
-        (new Logger(UsersService.name)).debug('Database (userss) saved.');
+        (new Logger(UsersService.name)).debug('Database (users) saved.');
     }
     
 }
