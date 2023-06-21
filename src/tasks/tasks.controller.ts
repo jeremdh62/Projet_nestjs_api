@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Patch, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Logger, Param, ParseUUIDPipe, Patch, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { AssignUserToTaskRequest, CreateTaskRequest, UpdateTaskRequest, UpdateTaskStatusRequest } from './tasks.request';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -41,7 +41,17 @@ export class TasksController {
     public createTask(@Body(ValidationPipe) createTaskRequest: CreateTaskRequest) {
         return this.tasksService.createTask(createTaskRequest);
     }
-    
+
+    @Patch('assign-user')
+    @HttpCode(200)
+    @ApiOperation({ summary: 'Associer un utilisateur à une tâche'})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
+    @ApiResponse({ status: 404, description: 'Not Found.'})
+    @ApiBody({ type: AssignUserToTaskRequest })
+    public assignUserToTask(@Body(ValidationPipe) assignUserToTaskRequest: AssignUserToTaskRequest) {
+        return this.tasksService.assignUserToTask(assignUserToTaskRequest);
+    }
+
     @Patch(':id')
     @HttpCode(200)
     @ApiOperation({ summary: 'Mettre à jour une tâche par ID' })
@@ -61,17 +71,7 @@ export class TasksController {
     public deleteTask(@Param('id', ParseUUIDPipe) id: string) {
         return this.tasksService.deleteTask(id);
     }
-    
-    @Patch('assign-user')
-    @HttpCode(200)
-    @ApiOperation({ summary: 'Associer un utilisateur à une tâche'})
-    @ApiResponse({ status: 403, description: 'Forbidden.'})
-    @ApiResponse({ status: 404, description: 'Not Found.'})
-    @ApiBody({ type: AssignUserToTaskRequest })
-    public assignUserToTask(@Body(ValidationPipe) assignUserToTaskRequest: AssignUserToTaskRequest) {
-        return this.tasksService.assignUserToTask(assignUserToTaskRequest);
-    }
-    
+
     @Patch(':id/change-status')
     @HttpCode(200)
     @ApiOperation({ summary: 'Changer le status d\'une tâche par ID', })

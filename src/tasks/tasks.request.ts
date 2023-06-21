@@ -20,11 +20,13 @@ export class UpdateTaskRequest {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
+  @IsOptional()
   public title: string;
 
   @IsDefined()
   @IsString()
   @ApiProperty()
+  @IsOptional()
   public description: string;
 
 }

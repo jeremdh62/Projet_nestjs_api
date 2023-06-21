@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Request, UseGuards, ValidationPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginRequest } from './auth.request';
-import { AuthGuard } from './auth.guard';
 import { AllowAnonymos } from 'src/app.decorator';
 import { ApiTags, ApiBearerAuth, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
 
@@ -19,15 +18,5 @@ export class AuthController {
     @ApiResponse({ status: 404, description: 'Not Found.'})
     public login(@Body(ValidationPipe) loginRequest: LoginRequest ) {
         return this.authService.singIn(loginRequest.email, loginRequest.password);
-    }
-
-    @ApiBearerAuth()
-    @Get('profile')
-    @ApiOperation({ summary: 'Obtenir ses données utilisateurs' })
-    @ApiResponse({ status: 401, description: 'Unauthorized.'})
-    @ApiResponse({ status: 403, description: 'Forbidden.'})
-    @ApiResponse({ status: 404, description: 'Not Found.'})
-    getProfile(@Request() req) {
-        return req.user;
     }
 }
