@@ -11,14 +11,27 @@ export class TasksService {
     public constructor(@InjectRepository(Task) private readonly tasksRepository: Repository<Task>, private readonly userService: UsersService) { }
 
     async getTasks() {
-        return await this.tasksRepository.find();
+        const tasks =  await this.tasksRepository.find(
+            {
+                relations: ['user']
+            }
+        );
+        
+        return tasks.map((task) => {
+            delete task.user?.password;
+            return task;
+        });
     }
 
     async getTask(id: string) {
-        const task =  await this.tasksRepository.findOneBy({ id });
+        const task =  await this.tasksRepository.findOne({ 
+            where: { id },
+            relations: ['user']
+         });
         if (!task) {
             throw new NotFoundException("Task not found")
         }
+        delete task.user?.password;
         return task;
     }
 
