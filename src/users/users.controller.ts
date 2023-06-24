@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Patch, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Patch, Post, UseGuards, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserRequest, UpdateUserRequest } from './users.request';
 import { Roles } from 'src/auth/roles.decorator';
@@ -10,10 +10,12 @@ import { AdminOrOwnerGuard } from 'src/admin-or-owner.guard';
 import { IsOwnerOrAdmin } from 'src/admin-or-owner.decorator';
 import { Entites } from 'src/entities.enum';
 import { ApiTags, ApiBearerAuth, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { UsersInterceptor } from 'src/interceptors/users.interceptor';
 
 @ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
+@UseInterceptors(UsersInterceptor)
 export class UsersController {
     public constructor(private usersService: UsersService) { }
 

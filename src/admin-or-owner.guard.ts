@@ -5,6 +5,7 @@ import { User } from './users/users.entity';
 import { UsersService } from './users/users.service';
 import { Role } from './enums/role.enum';
 import { Entites } from './entities.enum';
+import { JwtPayload } from './auth/jwt-payload';
 
 @Injectable()
 export class AdminOrOwnerGuard implements CanActivate {
@@ -22,7 +23,7 @@ export class AdminOrOwnerGuard implements CanActivate {
   }
 
   private async isOwner(
-    loggedInUser: any,
+    loggedInUser: JwtPayload,
     subjectId: string,
     subjectEntity: string,
   ) {
