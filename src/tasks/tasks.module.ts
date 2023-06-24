@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from './tasks.entity';
 import { TasksController } from './tasks.controller';
@@ -10,7 +10,7 @@ import { UsersModule } from 'src/users/users.module';
         TypeOrmModule.forFeature([
           Task
         ]),
-        UsersModule
+        forwardRef(() => UsersModule),
     ],
     controllers: [
         TasksController
