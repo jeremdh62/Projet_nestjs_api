@@ -83,8 +83,8 @@ export class UsersController {
     }
 
     @Delete(':id')
-    @Roles(Role.ADMIN)
-    @UseGuards(AuthGuard, RolesGuard, AdminOrOwnerGuard)
+    @UseGuards(AuthGuard, AdminOrOwnerGuard)
+    @IsOwnerOrAdmin(Entites.USER)
     @HttpCode(200)
     @ApiOperation({ summary: 'Supprimer un utilisateur par ID'})
     @ApiResponse({ status: 401, description: 'Unauthorized.'})

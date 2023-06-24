@@ -3,6 +3,9 @@ import { TasksService } from './tasks.service';
 import { AssignUserToTaskRequest, CreateTaskRequest, UpdateTaskRequest, UpdateTaskStatusRequest } from './tasks.request';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiTags, ApiBearerAuth, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { AdminOrOwnerGuard } from 'src/admin-or-owner.guard';
+import { IsOwnerOrAdmin } from 'src/admin-or-owner.decorator';
+import { Entites } from 'src/entities.enum';
 
 @ApiTags('Tasks')
 @ApiBearerAuth()
@@ -64,6 +67,8 @@ export class TasksController {
     
     @Delete(':id')
     @HttpCode(200)
+    @UseGuards(AuthGuard, AdminOrOwnerGuard)
+    @IsOwnerOrAdmin(Entites.TASK)
     @ApiOperation({ summary: 'Supprimer une tâche par ID'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @ApiResponse({ status: 404, description: 'Not Found.'})
