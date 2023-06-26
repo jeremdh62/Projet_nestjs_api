@@ -1,41 +1,33 @@
-## Development
+# Project NestJS - API TodoList
+
+## Installation and run
+
+Create .env file via .env.example
+
+and run
 
 ```bash
-make dev
+$ make dev
 ```
 
-## Build
+## Routes
 
-```bash
-make build
-```
+Users :
+- POST /users
+- GET /users
+- POST /users/admin
+- GET /users/:id
+- PATCH /users/:id
+- DELETE /users/:id
 
-## Serve
+Auth :
+- POST /auth/login
 
-```bash
-make serve
-```
-
-## Install
-
-```bash
-make install
-```
-
-## Start
-
-```bash
-make start
-```
-
-## Stop
-
-```bash
-make stop
-```
-
-## Restart
-
-```bash
-make restart
-```
+Tasks :
+- POST /tasks
+- GET /tasks
+- GET /tasks/:id
+- PATCH /tasks/asign-user
+- PATCH /tasks/:id
+- PATCH /tasks/:id/change-status
+- DELETE /tasks/:id
