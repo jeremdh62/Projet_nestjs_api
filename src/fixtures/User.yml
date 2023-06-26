@@ -1,0 +1,20 @@
+entity: User
+processor: '../processor/UserProcessor.ts'
+items:
+  user1:
+    name: 'admin'
+    email: 'admin@test.com'
+    password: 'password'
+  user2:
+    name: 'user1'
+    email: 'user1@test.com'
+    password: 'password'
+  user3:
+    name: 'user2'
+    email: 'user2@test.com'
+    password: 'password'
+ # user{4...6}:
+ #   name: '{{ name }}'
+ #   email: '{{ internet.email }}'
+ #   password: 'password'
+ #   roles: ['ROLE_USER']
