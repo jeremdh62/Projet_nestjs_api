@@ -28,7 +28,8 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
       host: process.env.DB_HOST,
       port: 5432,
       autoLoadEntities: true,
-      synchronize: process.env.APP_ENV == "DEV"
+      synchronize: process.env.APP_ENV == "DEV",
+      dropSchema: true
     }),
     AuthModule,
     TasksModule,

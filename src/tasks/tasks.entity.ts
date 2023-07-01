@@ -14,8 +14,7 @@ export class Task {
 
   @Column({
     type: 'varchar',
-    length: 255,
-    unique: true,
+    length: 255
   })
   public title: string;
 

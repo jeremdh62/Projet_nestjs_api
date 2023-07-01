@@ -4,6 +4,7 @@ import * as compression from 'compression';
 import { VersioningType } from '@nestjs/common';
 import helmet from 'helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { createData } from './fixtures/fixtures';
 
 
 async function bootstrap() {
@@ -25,6 +26,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  await createData();
 
   await app.listen(3000);
 }
