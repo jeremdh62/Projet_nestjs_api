@@ -20,7 +20,7 @@ export class User {
     unique: true,
   })
   public email: string;
-
+ 
   @Column({
     type: 'char',
     length: 255,
