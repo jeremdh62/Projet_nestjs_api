@@ -9,7 +9,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { AdminOrOwnerGuard } from 'src/admin-or-owner.guard';
 import { IsOwnerOrAdmin } from 'src/admin-or-owner.decorator';
 import { Entites } from 'src/entities.enum';
-import { ApiTags, ApiBearerAuth, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiResponse, ApiOperation, ApiBody, ApiParam } from '@nestjs/swagger';
 import { UsersInterceptor } from 'src/interceptors/users.interceptor';
 
 @ApiTags('Users')
@@ -39,7 +39,6 @@ export class UsersController {
     @ApiResponse({ status: 401, description: 'Unauthorized.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @ApiResponse({ status: 404, description: 'Not Found.'})
-    @ApiBody({ type: ParseUUIDPipe })
     public getUser(@Param('id', ParseUUIDPipe) id: string) {
         return this.usersService.getUser(id);
     }
@@ -90,7 +89,6 @@ export class UsersController {
     @ApiResponse({ status: 401, description: 'Unauthorized.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @ApiResponse({ status: 404, description: 'Not Found.'})
-    @ApiBody({ type: ParseUUIDPipe })
     public deleteUser(@Param('id', ParseUUIDPipe) id: string) {
         return this.usersService.deleteUser(id);
     }

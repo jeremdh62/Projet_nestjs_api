@@ -17,7 +17,12 @@ export class UsersService {
     }
 
     public getUser(id: string) {
-        return this.userRepo.findOneBy({ id });
+        const user = this.userRepo.findOneBy({ id });
+        if (!user) {
+            throw new NotFoundException("User not found");
+        }
+        
+        return user;
     }
 
     public createUser(createUserRequest: CreateUserRequest) {

@@ -28,7 +28,6 @@ export class TasksController {
     @ApiOperation({ summary: 'Obtenir une tâche par ID', description: 'Cette opération permet d\'obtenir une tâche utilisant son ID.' })
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @ApiResponse({ status: 404, description: 'Not Found.'})
-    @ApiBody({ type: ParseUUIDPipe })
     public getTask(@Param('id', ParseUUIDPipe) id: string) {
         return this.tasksService.getTask(id);
     }
@@ -72,7 +71,6 @@ export class TasksController {
     @ApiOperation({ summary: 'Supprimer une tâche par ID'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     @ApiResponse({ status: 404, description: 'Not Found.'})
-    @ApiBody({ type: ParseUUIDPipe })
     public deleteTask(@Param('id', ParseUUIDPipe) id: string) {
         return this.tasksService.deleteTask(id);
     }

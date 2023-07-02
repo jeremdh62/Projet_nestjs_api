@@ -17,6 +17,13 @@ Admin :
 User :
 - Email : "user1@test.com"
 - Password: "password"
+
+## Swagger : 
+```
+http://localhost:3000/api
+```
+- Insérer uniquement le token après l'avoir récuperer du login. Ie '`<token>`' et non 'Bearer `<token>`'.
+
 ## Routes
 
 Users :
