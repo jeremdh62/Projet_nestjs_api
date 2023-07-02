@@ -24,6 +24,21 @@ const createData = async () => {
     // taskRepo.clear();
     // userRepo.clear();
 
+    const admin = new User();
+    admin.email = 'admin@test.com'
+    admin.name = 'admin'
+    admin.password = '$2b$10$ikT5An8SGB0WavlOWaBp7Oz8tFUNWrEYHNNBXKQiUICg9sj1SNaXC'; // password
+    admin.role = [Role.ADMIN];
+
+    await userRepo.save(admin);
+
+    const user1 = new User();
+    user1.email = 'user1@test.com'
+    user1.name = 'user1'
+    user1.password = '$2b$10$ikT5An8SGB0WavlOWaBp7Oz8tFUNWrEYHNNBXKQiUICg9sj1SNaXC'; // password
+    user1.role = [Role.USER];
+    await userRepo.save(user1);
+
     for (let i = 0; i < 10; i++) {
         const user = new User();
         user.email = faker.internet.email().toLowerCase();

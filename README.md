@@ -9,7 +9,14 @@ and run
 ```bash
 $ make dev
 ```
+## Users accounts
+Admin :
+ - Email : "admin@test.com"
+ - Password: "password" 
 
+User :
+- Email : "user1@test.com"
+- Password: "password"
 ## Routes
 
 Users :
