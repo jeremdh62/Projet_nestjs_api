@@ -1,41 +1,47 @@
-## Development
+# Project NestJS - API TodoList
+
+## Installation and run
+
+Create .env file via .env.example
+
+and run
 
 ```bash
-make dev
+$ make dev
 ```
+## Users accounts
+Admin :
+ - Email : "admin@test.com"
+ - Password: "password" 
 
-## Build
+User :
+- Email : "user1@test.com"
+- Password: "password"
 
-```bash
-make build
+## Swagger : 
 ```
-
-## Serve
-
-```bash
-make serve
+http://localhost:3000/api
 ```
+- Insérer uniquement le token après l'avoir récuperer du login. Ie '`<token>`' et non 'Bearer `<token>`'.
 
-## Install
+## Routes
 
-```bash
-make install
-```
+Users :
+- POST /users
+- GET /users
+- POST /users/admin
+- GET /users/:id
+- PATCH /users/:id
+- DELETE /users/:id
 
-## Start
+Auth :
+- POST /auth/login
 
-```bash
-make start
-```
-
-## Stop
-
-```bash
-make stop
-```
-
-## Restart
-
-```bash
-make restart
-```
+Tasks :
+- POST /tasks
+- GET /tasks
+- GET /tasks/:id
+- PATCH /tasks/asign-user
+- PATCH /tasks/:id
+- PATCH /tasks/:id/change-status
+- DELETE /tasks/:id

@@ -7,18 +7,18 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - 3000:3000
+      - ${APP_PORT}:3000
     volumes:
       - .:/home/node
 
   db:
     image: postgres:15.2
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - 5432:5432
+      - ${DB_PORT}:5432
     volumes:
       - db_data:/var/lib/postgresql/data
 
